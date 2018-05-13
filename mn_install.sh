@@ -40,18 +40,17 @@ echo "*                                            *"
 echo "*    DYSTEM - Masternode installer ${VERSION}    *"
 echo "*                                            *"
 echo "**********************************************"
-
-echo && echo && echo
-
+echo 
 echo "Welcome to the dystem MN installer."
 echo
-echo "Please press enter when asked and follow the instructions. Are you sure you want to install? type y/n followed by [ENTER]:"
+echo "Please follow the instructions when asked and press [ENTER] when asked too do so."
 echo
 echo "Are you sure you want to install a dystem masternode? type y/n followed by [ENTER]:"
 read AGREE
 
 if [[ $AGREE =~ "y" ]] ; then
 
+	#Install required dependancies
 	sudo apt-get -y update
 	sudo apt-get -y upgrade
 	sudo apt-get -y dist-upgrade
@@ -60,8 +59,9 @@ if [[ $AGREE =~ "y" ]] ; then
 	sudo apt-get -y install software-properties-common
 	sudo add-apt-repository ppa:bitcoin/bitcoin
 	sudo apt-get update
-	sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config libssl-dev autoconf libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev nano git libminiupnpc-dev libzmq5
+	sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config libssl-dev libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libzmq5
 
+	#Increase swap memory
 	cd /var
 	sudo touch swap.img
 	sudo chmod 600 swap.img
@@ -72,6 +72,7 @@ if [[ $AGREE =~ "y" ]] ; then
 	sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
 	cd
 
+	#Pull down and unpack binaries
 	wget https://github.com/Dystem/dystem-core/releases/download/$VERSION/mnbin.tar.gz
 	tar -xzf mnbin.tar.gz
 	sudo mv bin/* /usr/bin
@@ -79,7 +80,11 @@ if [[ $AGREE =~ "y" ]] ; then
 	echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
 	source ~/.bashrc
 
+	#Get users to input required details
 	echo "We are now going to setup the masternode"
+	#TODO: Can we not get the server IP from bash? 
+	echo "IP ADDRESS TEST"
+	echo hostname --ip-address
 	echo "Please type the IP address of this server followed by [ENTER]:"
 	read IP_ADDR
 
@@ -89,9 +94,31 @@ if [[ $AGREE =~ "y" ]] ; then
   	echo "Please type the 'masternode private key' for this $ALIAS followed by [ENTER]:"
   	read MN_PRIVATE_KEY
 
+  	#Write config to config file
   	mkdir -p $CONF_DIR
   	cd $CONF_DIR
   	touch $CONF_FILE 
+
+  	echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> .dystem/.dystem.conf
+  	echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> .dystem/.dystem.conf
+  	echo "rpcallowip=127.0.0.1" >> .dystem/.dystem.conf
+  	echo "rpcport=17100" >> .dystem/.dystem.conf
+  	echo "listen=1" >> .dystem/.dystem.conf
+  	echo "server=1" >> .dystem/.dystem.conf
+  	echo "daemon=1" >> .dystem/.dystem.conf
+  	echo "masternode=1" >> .dystem/.dystem.conf
+
+  	echo "masternodeaddr=$IP_ADDR:$PORT" >> .dystem/.dystem.conf
+  	echo "masternodeprivkey=$MN_PRIVATE_KEY" >> .dystem/.dystem.conf
+
+  	echo "maxconnections=256" >> .dystem/.dystem.conf
+  	echo "port=65443" >> .dystem/.dystem.conf
+  	echo "addnode=209.250.252.236" >> .dystem/.dystem.conf
+  	echo "addnode=45.77.231.211" >> .dystem/.dystem.conf
+  	echo "addnode=149.28.13.197" >> .dystem/.dystem.conf
+  	echo "addnode=108.61.69.42" >> .dystem/.dystem.conf
+  	echo "addnode=8.9.30.71" >> .dystem/.dystem.conf
+  	echo "addnode=51.15.117.213" >> .dystem/.dystem.conf
 
 
 fi 
