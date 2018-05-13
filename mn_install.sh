@@ -112,8 +112,8 @@ if [[ $AGREE =~ "y" ]] ; then
   	echo "addnode=51.15.117.213" >> dystem.conf_TEMP 
 
   	mv dystem.conf_TEMP dystem.conf
-  	rm -f mn_install.sh
-  	rm -rdf bin/
-  	rm -f mnbin.tar.gz
+  	sudo rm -f mn_install.sh
+  	sudo rm -rdf bin/
+  	sudo rm -f mnbin.tar.gz
   	dystemd
 fi 
