@@ -84,7 +84,7 @@ if [[ $AGREE =~ "y" ]] ; then
 	echo "We are now going to setup the masternode"
 	#TODO: Can we not get the server IP from bash? 
 	echo "IP ADDRESS TEST"
-	IP=$(hostname  -I | cut -f1 -d' ')
+	IP='hostname  -I | cut -f1 -d' ')'
 	echo IP
 	echo "Please type the IP address of this server followed by [ENTER]:"
 	read IP_ADDR
@@ -101,23 +101,25 @@ if [[ $AGREE =~ "y" ]] ; then
   	touch $CONF_FILE 
 
   	cd .dystem
-  	echo "rpcuser=user"`shuf -i 100000-10000000 -n 1`| cat dystem.conf - 
-  	echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` | cat dystem.conf - 
-  	echo "rpcallowip=127.0.0.1" | cat dystem.conf - 
-  	echo "rpcport=17100" | cat dystem.conf - 
-  	echo "listen=1" | cat dystem.conf - 
-  	echo "server=1"| cat dystem.conf - 
-  	echo "daemon=1" | cat dystem.conf - 
-  	echo "masternode=1"| cat dystem.conf - 
-  	echo "masternodeaddr=$IP_ADDR:$PORT" | cat dystem.conf - 
-  	echo "masternodeprivkey=$MN_PRIVATE_KEY"| cat dystem.conf - 
-  	echo "maxconnections=256" | cat dystem.conf - 
-  	echo "port=65443" | cat dystem.conf - 
-  	echo "addnode=209.250.252.236" | cat dystem.conf - 
-  	echo "addnode=45.77.231.211" | cat dystem.conf - 
-  	echo "addnode=149.28.13.197" | cat dystem.conf - 
-  	echo "addnode=108.61.69.42" | cat dystem.conf - 
-  	echo "addnode=8.9.30.71" | cat dystem.conf - 
-  	echo "addnode=51.15.117.213" | cat dystem.conf - 
+  	echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
+  	echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
+  	echo "rpcallowip=127.0.0.1" >> dystem.conf_TEMP 
+  	echo "rpcport=17100" >> dystem.conf_TEMP 
+  	echo "listen=1" >> dystem.conf_TEMP 
+  	echo "server=1" >> dystem.conf_TEMP 
+  	echo "daemon=1" >> dystem.conf_TEMP 
+  	echo "masternode=1" >> dystem.conf_TEMP 
+  	echo "masternodeaddr=$IP_ADDR:$PORT" >> dystem.conf_TEMP 
+  	echo "masternodeprivkey=$MN_PRIVATE_KEY" >> dystem.conf_TEMP 
+  	echo "maxconnections=256" >> dystem.conf_TEMP 
+  	echo "port=65443" >> dystem.conf_TEMP 
+  	echo "addnode=209.250.252.236" >> dystem.conf_TEMP 
+  	echo "addnode=45.77.231.211" >> dystem.conf_TEMP 
+  	echo "addnode=149.28.13.197" >> dystem.conf_TEMP 
+  	echo "addnode=108.61.69.42" >> dystem.conf_TEMP 
+  	echo "addnode=8.9.30.71" >> dystem.conf_TEMP 
+  	echo "addnode=51.15.117.213" >> dystem.conf_TEMP 
+
+  	mv dystem.conf_TEMP .dystem/dystem.conf
 
 fi 
