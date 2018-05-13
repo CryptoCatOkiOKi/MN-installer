@@ -37,6 +37,13 @@ echo "**********************************************"
 
 echo && echo && echo
 
+echo "Welcome to the dystem MN installer."
+
+if [[ $(lsb_release -d) != *16.04* ]]; then
+  echo -e "The operating system is not Ubuntu 16.04. You must be running on ubuntu 16.04."
+  exit 1
+fi
+
 sudo su
 apt update -y 
 apt upgrade -y 
