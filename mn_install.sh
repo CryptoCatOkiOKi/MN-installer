@@ -45,17 +45,18 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
 fi
 
 echo "1111111"
-sudo apt update -y 
-sudo apt upgrade -y 
-sudo apt dist-upgrade -y 
-sudo apt autoremove -y
-sudo apt autoclean -y
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade
+sudo apt-get -y autoremove
+sudo apt-get -y autoclean
 echo "2222222222"
-sudo apt install -y software-properties-common
+sudo apt-get -y install software-properties-common
 sudo add-apt-repository ppa:bitcoin/bitcoin
-sudo apt update
-sudo apt -y install build-essential libtool autotools-dev automake pkg-config libssl-dev autoconf libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev nano git libminiupnpc-dev libzmq5
+sudo apt-get update
+sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config libssl-dev autoconf libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev nano git libminiupnpc-dev libzmq5
 echo "3333333333"
+
 cd /var
 sudo touch swap.img
 sudo chmod 600 swap.img
