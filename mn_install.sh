@@ -84,12 +84,13 @@ if [[ $AGREE =~ "y" ]] ; then
 	echo "We are now going to setup the masternode"
 	#TODO: Can we not get the server IP from bash? 
 	echo "IP ADDRESS TEST"
-	echo hostname --ip-address
+	IP=ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}'
+	echo IP
 	echo "Please type the IP address of this server followed by [ENTER]:"
 	read IP_ADDR
 
-	echo "Please type the 'Alias' for this masternode followed by [ENTER]:"
-  	read ALIAS
+	#echo "Please type the 'Alias' for this masternode followed by [ENTER]:"
+  	#read ALIAS
 
   	echo "Please type the 'masternode private key' for this $ALIAS followed by [ENTER]:"
   	read MN_PRIVATE_KEY
@@ -99,26 +100,23 @@ if [[ $AGREE =~ "y" ]] ; then
   	cd $CONF_DIR
   	touch $CONF_FILE 
 
-  	echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> .dystem/.dystem.conf
-  	echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> .dystem/.dystem.conf
-  	echo "rpcallowip=127.0.0.1" >> .dystem/.dystem.conf
-  	echo "rpcport=17100" >> .dystem/.dystem.conf
-  	echo "listen=1" >> .dystem/.dystem.conf
-  	echo "server=1" >> .dystem/.dystem.conf
-  	echo "daemon=1" >> .dystem/.dystem.conf
-  	echo "masternode=1" >> .dystem/.dystem.conf
-
-  	echo "masternodeaddr=$IP_ADDR:$PORT" >> .dystem/.dystem.conf
-  	echo "masternodeprivkey=$MN_PRIVATE_KEY" >> .dystem/.dystem.conf
-
-  	echo "maxconnections=256" >> .dystem/.dystem.conf
-  	echo "port=65443" >> .dystem/.dystem.conf
-  	echo "addnode=209.250.252.236" >> .dystem/.dystem.conf
-  	echo "addnode=45.77.231.211" >> .dystem/.dystem.conf
-  	echo "addnode=149.28.13.197" >> .dystem/.dystem.conf
-  	echo "addnode=108.61.69.42" >> .dystem/.dystem.conf
-  	echo "addnode=8.9.30.71" >> .dystem/.dystem.conf
-  	echo "addnode=51.15.117.213" >> .dystem/.dystem.conf
-
+  	echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> .dystem/dystem.conf
+  	echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> .dystem/dystem.conf
+  	echo "rpcallowip=127.0.0.1" >> .dystem/dystem.conf
+  	echo "rpcport=17100" >> .dystem/dystem.conf
+  	echo "listen=1" >> .dystem/dystem.conf
+  	echo "server=1" >> .dystem/dystem.conf
+  	echo "daemon=1" >> .dystem/dystem.conf
+  	echo "masternode=1" >> .dystem/dystem.conf
+  	echo "masternodeaddr=$IP_ADDR:$PORT" >> .dystem/dystem.conf
+  	echo "masternodeprivkey=$MN_PRIVATE_KEY" >> .dystem/dystem.conf
+  	echo "maxconnections=256" >> .dystem/dystem.conf
+  	echo "port=65443" >> .dystem/dystem.conf
+  	echo "addnode=209.250.252.236" >> .dystem/dystem.conf
+  	echo "addnode=45.77.231.211" >> .dystem/dystem.conf
+  	echo "addnode=149.28.13.197" >> .dystem/dystem.conf
+  	echo "addnode=108.61.69.42" >> .dystem/dystem.conf
+  	echo "addnode=8.9.30.71" >> .dystem/dystem.conf
+  	echo "addnode=51.15.117.213" >> .dystem/dystem.conf
 
 fi 
