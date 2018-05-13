@@ -45,9 +45,8 @@ apt autoremove -y
 apt autoclean -y
 
 apt install -y software-properties-common
-add-apt-repository ppa:bitcoin/bitcoin && 
-add-apt-repository ppa:bitcoin/bitcoin && 
-apt update && 
+add-apt-repository ppa:bitcoin/bitcoin
+apt update
 apt -y install build-essential libtool autotools-dev automake pkg-config libssl-dev autoconf libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev nano git libminiupnpc-dev libzmq5
 cd
 #replace with pre compiled binaries
