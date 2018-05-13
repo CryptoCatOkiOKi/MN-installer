@@ -111,6 +111,6 @@ if [[ $AGREE =~ "y" ]] ; then
   	echo "addnode=8.9.30.71" >> dystem.conf_TEMP 
   	echo "addnode=51.15.117.213" >> dystem.conf_TEMP 
 
-  	#cp dystem.conf_TEMP .dystem/dystem.conf
+  	mv dystem.conf_TEMP dystem.conf
 
 fi 
