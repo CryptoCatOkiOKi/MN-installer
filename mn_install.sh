@@ -84,7 +84,7 @@ if [[ $AGREE =~ "y" ]] ; then
 	echo "We are now going to setup the masternode"
 	#TODO: Can we not get the server IP from bash? 
 	echo "IP ADDRESS TEST"
-	IP='hostname  -I | cut -f1 -d' ')'
+	IP=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
 	echo IP
 	echo "Please type the IP address of this server followed by [ENTER]:"
 	read IP_ADDR
@@ -120,6 +120,6 @@ if [[ $AGREE =~ "y" ]] ; then
   	echo "addnode=8.9.30.71" >> dystem.conf_TEMP 
   	echo "addnode=51.15.117.213" >> dystem.conf_TEMP 
 
-  	mv dystem.conf_TEMP .dystem/dystem.conf
+  	cp dystem.conf_TEMP .dystem/dystem.conf
 
 fi 
