@@ -84,7 +84,7 @@ if [[ $AGREE =~ "y" ]] ; then
 	echo "We are now going to setup the masternode"
 	#TODO: Can we not get the server IP from bash? 
 	echo "IP ADDRESS TEST"
-	IP=$(/sbin/ip -o -4 addr list eth0 | awk '{print $4}' | cut -d/ -f1)
+	IP=$(hostname  -I | cut -f1 -d' ')
 	echo IP
 	echo "Please type the IP address of this server followed by [ENTER]:"
 	read IP_ADDR
@@ -100,7 +100,6 @@ if [[ $AGREE =~ "y" ]] ; then
   	cd $CONF_DIR
   	touch $CONF_FILE 
 
-  	cd .dystem
   	echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
   	echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
   	echo "rpcallowip=127.0.0.1" >> dystem.conf_TEMP 
