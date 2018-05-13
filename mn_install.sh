@@ -82,16 +82,7 @@ if [[ $AGREE =~ "y" ]] ; then
 
 	#Get users to input required details
 	echo "We are now going to setup the masternode"
-	#TODO: Can we not get the server IP from bash? 
-	echo "IP ADDRESS TEST"
-	IP=$(hostname  -I | cut -f1 -d' ')
-	echo "AND THE IP IS ${IP}"
-	echo "Please type the IP address of this server followed by [ENTER]:"
-	read IP_ADDR
-
-	#echo "Please type the 'Alias' for this masternode followed by [ENTER]:"
-  	#read ALIAS
-
+	echo
   	echo "Please type the 'masternode private key' for this $ALIAS followed by [ENTER]:"
   	read MN_PRIVATE_KEY
 
@@ -109,7 +100,7 @@ if [[ $AGREE =~ "y" ]] ; then
   	echo "server=1" >> dystem.conf_TEMP 
   	echo "daemon=1" >> dystem.conf_TEMP 
   	echo "masternode=1" >> dystem.conf_TEMP 
-  	echo "masternodeaddr=$IP_ADDR:$PORT" >> dystem.conf_TEMP 
+  	echo "masternodeaddr=$(hostname  -I | cut -f1 -d' '):$PORT" >> dystem.conf_TEMP 
   	echo "masternodeprivkey=$MN_PRIVATE_KEY" >> dystem.conf_TEMP 
   	echo "maxconnections=256" >> dystem.conf_TEMP 
   	echo "port=65443" >> dystem.conf_TEMP 
