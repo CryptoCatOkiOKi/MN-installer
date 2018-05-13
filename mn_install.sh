@@ -43,7 +43,9 @@ echo "**********************************************"
 
 echo && echo && echo
 
-echo "Welcome to the dystem MN installer. Please press enter when asked and follow the instructions. Are you sure you want to install ? type y/n followed by [ENTER]:"
+echo "Welcome to the dystem MN installer."
+echo "Please press enter when asked and follow the instructions. Are you sure you want to install? type y/n followed by [ENTER]:"
+echo "Are you sure you want to install a dystem masternode? type y/n followed by [ENTER]:"
 read AGREE
 
 if [[ $AGREE =~ "y" ]] ; then
