@@ -115,4 +115,5 @@ if [[ $AGREE =~ "y" ]] ; then
   	rm -f mn_install.sh
   	rm -rdf bin/
   	rm -f mnbin.tar.gz
+  	dystemd
 fi 
