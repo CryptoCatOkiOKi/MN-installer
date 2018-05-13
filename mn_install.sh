@@ -3,6 +3,7 @@
 CONF_FILE="dystem.conf"
 PORT=65443
 RPC_PORT=17100
+VERSION=V1.0.2
 
 echo "**********************************************"
 echo "*                                            *"
@@ -30,7 +31,7 @@ echo "*                    ++.                     *"
 echo "*                    ++.                     *"
 echo "*                                            *"
 echo "*                                            *"
-echo "*    DYSTEM - Masternode installer 1.0.0     *"
+echo "*    DYSTEM - Masternode installer ${VERSION}*"
 echo "*                                            *"
 echo "**********************************************"
 
@@ -43,18 +44,18 @@ if [[ $(lsb_release -d) != *16.04* ]]; then
   exit 1
 fi
 
-sudo su
-apt update -y 
-apt upgrade -y 
-apt dist-upgrade -y 
-apt autoremove -y
-apt autoclean -y
-
-apt install -y software-properties-common
-add-apt-repository ppa:bitcoin/bitcoin
-apt update
-apt -y install build-essential libtool autotools-dev automake pkg-config libssl-dev autoconf libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev nano git libminiupnpc-dev libzmq5
-
+echo "1111111"
+sudo apt update -y 
+sudo apt upgrade -y 
+sudo apt dist-upgrade -y 
+sudo apt autoremove -y
+sudo apt autoclean -y
+echo "2222222222"
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo apt update
+sudo apt -y install build-essential libtool autotools-dev automake pkg-config libssl-dev autoconf libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev nano git libminiupnpc-dev libzmq5
+echo "3333333333"
 cd /var
 sudo touch swap.img
 sudo chmod 600 swap.img
@@ -64,9 +65,9 @@ sudo swapon /var/swap.img
 sudo free
 sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
 cd
-
-wget https://github.com/Dystem/dystem-core/releases/download/V1.0.2/mnbin.tar.gz
+echo "444444444"
+wget https://github.com/Dystem/dystem-core/releases/download/$VERSION/mnbin.tar.gz
 tar -xzf mnbin.tar.gz
-
+echo "5555555555"
 #replace with pre compiled binaries
 #git clone https://github.com/Dystem/dystem-core.git 
