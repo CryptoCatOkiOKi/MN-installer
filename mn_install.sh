@@ -2,6 +2,9 @@
          
 CONF_FILE="dystem.conf"
 CONF_DIR=".dystem"
+BIN_DIR="bin"
+PKG_FILE="mnbin.tar.gz"
+SH_FILE="mn_install.sh"
 PORT=65443
 RPC_PORT=17100
 VERSION=V1.0.2
@@ -112,7 +115,7 @@ if [[ $AGREE =~ "y" ]] ; then
   	echo "addnode=51.15.117.213" >> dystem.conf_TEMP 
 
   	mv dystem.conf_TEMP dystem.conf
-  	rm -rdf "bin"
-  	rm -f "mnbin.tar.gz"
-  	rm -f "mn_install.sh"
+  	rm -rdf $BIN_DIR
+  	rm -f $PKG_FILE
+  	rm -f $SH_FILE
 fi 
