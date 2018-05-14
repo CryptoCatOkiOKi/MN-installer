@@ -118,5 +118,5 @@ if [[ $AGREE =~ "y" ]] ; then
   	sudo rm -f "/root/mnbin.tar.gz"
   	sudo rm -f "/root/mn_install.sh"
 
-  	./dystemd
+  	echo "BEEP!"
 fi 
