@@ -75,9 +75,11 @@ if [[ $AGREE =~ "y" ]] ; then
 	#Pull down and unpack binaries
 	wget https://github.com/Dystem/dystem-core/releases/download/$VERSION/mnbin.tar.gz
 	tar -xzf mnbin.tar.gz
-	sudo cp bin/dystemd /etc/init.d/dystemd
-	sudo update-rc.d dystemd defaults
-	sudo cp bin/* /usr/bin
+	#sudo cp bin/dystemd /etc/init.d/dystemd
+	#sudo update-rc.d dystemd defaults
+	sed -i -e '1i/path/to/my/script.sh || exit 1\' /etc/rc.local
+	sudo mv bin/* /usr/bin
+
 	mkdir -p ~/bin
 	echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
 	source ~/.bashrc
