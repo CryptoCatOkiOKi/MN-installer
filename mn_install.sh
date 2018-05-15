@@ -4,7 +4,7 @@ CONF_FILE="dystem.conf"
 CONF_DIR=".dystem"
 PORT=65443
 RPC_PORT=17100
-VERSION=V1.0.2
+VERSION=V1.0.3
 
 if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "The operating system is not Ubuntu 16.04. You must be running on ubuntu 16.04."
