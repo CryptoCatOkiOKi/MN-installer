@@ -117,5 +117,5 @@ if [[ $AGREE =~ "y" ]] ; then
   	sudo rm -f "/root/mnbin.tar.gz"
   	sudo rm -f "/root/mn_install.sh"
 
-  	echo "Enjoy uour masternode rewards! Now if you could get the developers a nice cup of coffee..."
+  	echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee..."
 fi 
