@@ -105,12 +105,18 @@ if [[ $AGREE =~ "y" ]] ; then
   	echo "masternodeprivkey=$MN_PRIVATE_KEY" >> dystem.conf_TEMP 
   	echo "maxconnections=256" >> dystem.conf_TEMP 
   	echo "port=65443" >> dystem.conf_TEMP 
-  	echo "addnode=209.250.252.236" >> dystem.conf_TEMP 
-  	echo "addnode=45.77.231.211" >> dystem.conf_TEMP 
-  	echo "addnode=149.28.13.197" >> dystem.conf_TEMP 
-  	echo "addnode=108.61.69.42" >> dystem.conf_TEMP 
-  	echo "addnode=8.9.30.71" >> dystem.conf_TEMP 
-  	echo "addnode=51.15.117.213" >> dystem.conf_TEMP 
+    echo "addnode=45.32.236.168" >> dystem.conf_TEMP 
+    echo "addnode=45.76.251.25" >> dystem.conf_TEMP 
+    echo "addnode=149.28.146.122" >> dystem.conf_TEMP 
+    echo "addnode=80.240.31.71" >> dystem.conf_TEMP 
+    echo "addnode=104.238.189.152" >> dystem.conf_TEMP 
+    echo "addnode=149.28.232.166" >> dystem.conf_TEMP 
+    echo "addnode=45.63.54.162" >> dystem.conf_TEMP 
+    echo "addnode=108.61.215.68" >> dystem.conf_TEMP 
+    echo "addnode=207.148.121.118" >> dystem.conf_TEMP 
+    echo "addnode=207.148.80.150" >> dystem.conf_TEMP 
+    echo "addnode=202.182.125.85" >> dystem.conf_TEMP 
+    echo "addnode=217.163.29.93" >> dystem.conf_TEMP 
 
   	mv dystem.conf_TEMP dystem.conf
   	sudo rm -rdf "/root/bin"
