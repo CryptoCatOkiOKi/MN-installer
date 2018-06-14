@@ -57,5 +57,4 @@ sudo mv bin/* /usr/bin
 sudo rm -rdf "/root/bin"
 sudo rm -f "/root/mnbin.tar.gz"
 sudo rm -f "/root/mn_update.sh"
-dystemd
 echo "Your masternode is now updated!"
