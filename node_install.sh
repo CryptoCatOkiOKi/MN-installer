@@ -5,6 +5,7 @@ CONF_DIR=".dystem"
 PORT=65443
 RPC_PORT=17100
 VERSION=V1.0.0
+CORE_VERSION=V1.0.5
 
 if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "The operating system is not Ubuntu 16.04. You must be running on ubuntu 16.04."
@@ -68,7 +69,7 @@ sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
 cd
 
 #Pull down and unpack binaries
-wget https://github.com/Dystem/dystem-core/releases/download/$VERSION/mnbin.tar.gz
+wget https://github.com/Dystem/dystem-core/releases/download/$CORE_VERSION/mnbin.tar.gz
 tar -xzf mnbin.tar.gz
 sudo mv bin/* /usr/bin
 sed -i -e '13i/usr/bin/dystemd || exit 1\' /etc/rc.local
