@@ -59,7 +59,8 @@ if [[ $AGREE =~ "y" ]] ; then
 	sudo apt-get -y install software-properties-common
 	sudo add-apt-repository ppa:bitcoin/bitcoin
 	sudo apt-get update
-	sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config libssl-dev libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libzmq5
+	sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config libssl-dev libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libzmq5 libboost-system1.58-dev libboost-system1.58.0 libboost-filesystem1.58-dev libboost-filesystem1.58.0 libboost-program-options-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libevent-pthreads-2.0-5
+
 
 	#Increase swap memory
 	cd /var
