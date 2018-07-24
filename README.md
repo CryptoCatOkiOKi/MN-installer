@@ -8,7 +8,7 @@ The code has been tested against Ubuntu 16.04.
 ## Install MN Guide
 
 The full Masternode setup guide can be found here:
-https://dystem.io/files/MNGuide-V1.0.3.docx
+https://dystem.io/files/MNGuide-V1.0.4.docx
 
 The one liner to launch the MN install process is:
 
