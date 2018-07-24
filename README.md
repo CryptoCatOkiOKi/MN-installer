@@ -32,5 +32,8 @@ The one liner to launch the MN install process is:
 wget https://raw.githubusercontent.com/Dystem/MN-installer/master/node_install.sh && chmod 755 node_install.sh && ./node_install.sh && dystemd
  ``` 
 
+## Monitor status of masternode whilst syncing / awaiting activation
 
- dystemd
+```  
+watch "dystem-cli getinfo && dystem-cli masternode status"
+  ``` 
