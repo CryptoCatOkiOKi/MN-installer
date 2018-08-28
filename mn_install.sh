@@ -88,13 +88,21 @@ if [[ $AGREE =~ "y" ]] ; then
 
   for i in `seq 1 1 $total_masternodes`; do
     echo
-      echo "Please type the 'masternode private key' for this $ALIAS followed by [ENTER]:"
+      echo "Please enter the 'masternode private key' for masternode ${i} followed by [ENTER]:"
       read MN_PRIVATE_KEY
 
       let "realtive_port=65442 + ${i}"
       echo $realtive_port
       install_dir="${CONF_DIR}${i}"
       echo $install_dir
+
+      echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
+      echo "dystemd -daemon -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystemd${i}.sh
+      echo '#!/bin/bash' > ~/bin/dystem-cli${i}.sh
+      echo "dystem-cli -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystem-cli${i}.sh
+      echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
+      echo "dystem-tx -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystem-tx${i}.sh
+      chmod 755 ~/bin/dystem*.sh
       
       #Write config to config file
       mkdir -p $install_dir
@@ -120,12 +128,12 @@ if [[ $AGREE =~ "y" ]] ; then
       
       mv dystem.conf_TEMP dystem.conf
 
-      cd ../
+      sh ~/bin/dystemd${i}.sh
   done
 
-        #sudo rm -rdf "/root/bin"
-        #sudo rm -f "/root/mnbin.tar.gz"
-        #sudo rm -f "/root/mn_install.sh"
+      sudo rm -rdf "/root/bin"
+      sudo rm -f "/root/mnbin.tar.gz"
+      sudo rm -f "/root/mn_install.sh"
 
-        echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
+      echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
 fi 
