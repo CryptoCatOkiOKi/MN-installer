@@ -1,8 +1,5 @@
 #/bin/bash
          
-CONF_FILE="dystem.conf"
-CONF_DIR=".dystem"
-PORT=65443
 RPC_PORT=17100
 VERSION=V1.0.6
 
@@ -94,21 +91,21 @@ if [[ $AGREE =~ "y" ]] ; then
       let "realtive_port=65442 + ${i}"
       echo "The port for this masternode is:"
       echo $realtive_port
-      install_dir="~/${CONF_DIR}${i}"
+      install_dir="./${.dystem}${i}"
+
+      echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
+      echo "dystemd -daemon -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystemd${i}.sh
+      echo '#!/bin/bash' > ~/bin/dystem-cli${i}.sh
+      echo "dystem-cli -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-cli${i}.sh
+      echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
+      echo "dystem-tx -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-tx${i}.sh
+      chmod 755 ~/bin/dystem*.sh
 
       #Write config to config file
       mkdir -p $install_dir
       cd $install_dir
-      touch $CONF_FILE
+      touch "dystem.conf"
 
-      echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
-      echo "dystemd -daemon -conf=${install_dir}/dystem.conf "'$*' >> ~/bin/dystemd${i}.sh
-      echo '#!/bin/bash' > ~/bin/dystem-cli${i}.sh
-      echo "dystem-cli -conf=${install_dir}/dystem.conf "'$*' >> ~/bin/dystem-cli${i}.sh
-      echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
-      echo "dystem-tx -conf=${install_dir}/dystem.conf "'$*' >> ~/bin/dystem-tx${i}.sh
-      chmod 755 ~/bin/dystem*.sh
-     
       touch dystem.conf_TEMP
       echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
       echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
