@@ -88,17 +88,21 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "Please enter the 'masternode private key' for masternode ${i} followed by [ENTER]:"
       read MN_PRIVATE_KEY
 
+      echo "Enter the alias for this masrternode"
+      read ALIAS
+
       let "realtive_port=65442 + ${i}"
       echo "The port for this masternode is:"
       echo $realtive_port
-      install_dir="./${.dystem}${i}"
+      let "realtive_rpc_port=17100 + ${i}"
+      install_dir=~/.dystem_$ALIAS
 
       echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
-      echo "dystemd -daemon -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystemd${i}.sh
+      echo "dystemd -daemon -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystemd_$ALIAS.sh
       echo '#!/bin/bash' > ~/bin/dystem-cli${i}.sh
-      echo "dystem-cli -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-cli${i}.sh
+      echo "dystem-cli -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-cli_$ALIAS.sh
       echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
-      echo "dystem-tx -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-tx${i}.sh
+      echo "dystem-tx -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-tx_$ALIAS.sh
       chmod 755 ~/bin/dystem*.sh
 
       #Write config to config file
@@ -110,7 +114,7 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
       echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
       echo "rpcallowip=127.0.0.1" >> dystem.conf_TEMP
-      echo "rpcport=17100" >> dystem.conf_TEMP
+      echo "rpcport=${realtive_rpc_port}" >> dystem.conf_TEMP
       echo "listen=1" >> dystem.conf_TEMP
       echo "server=1" >> dystem.conf_TEMP
       echo "daemon=1" >> dystem.conf_TEMP
@@ -125,14 +129,14 @@ if [[ $AGREE =~ "y" ]] ; then
       
       mv dystem.conf_TEMP dystem.conf
 
-      sh ~/bin/dystemd${i}.sh
+      sh ~/bin/dystemd_$ALIAS.sh
 
       cd ../
   done
 
-      sudo rm -rdf "/root/bin"
-      sudo rm -f "/root/mnbin.tar.gz"
-      sudo rm -f "/root/mn_install.sh"
+      #sudo rm -rdf "/root/bin"
+      #sudo rm -f "/root/mnbin.tar.gz"
+      #sudo rm -f "/root/mn_install.sh"
 
       echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
 fi 
