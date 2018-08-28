@@ -129,6 +129,8 @@ if [[ $AGREE =~ "y" ]] ; then
       mv dystem.conf_TEMP dystem.conf
 
       sh ~/bin/dystemd${i}.sh
+
+      cd ../
   done
 
       sudo rm -rdf "/root/bin"
