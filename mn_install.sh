@@ -55,7 +55,6 @@ if [[ $AGREE =~ "y" ]] ; then
 	sudo apt-get update
 	sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config libssl-dev libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libzmq5 libboost-system1.58-dev libboost-system1.58.0 libboost-filesystem1.58-dev libboost-filesystem1.58.0 libboost-program-options-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libevent-pthreads-2.0-5
 
-
 	#Increase swap memory
 	cd /var
 	sudo touch swap.img
@@ -79,59 +78,54 @@ if [[ $AGREE =~ "y" ]] ; then
 	#Get users to input required details
 	echo "We are now going to setup your masternodes…"
 
-  total_masternodes=1
+  total_masternodes=""
   re='^[0-3]+$'
-  while ! [[ $MNCOUNT =~ $re ]] ; do
+  while ! [[ $total_masternodes =~ $re ]] ; do
     echo ""
     echo "How many masternodes would you like to setup on this server?, note this is restricted to 3 as it is not recommnded to run more than 3 masternodes on a single server. type 1, 2 or 3 followed by [ENTER]:"
     read total_masternodes
   done
 
-  for i in `seq 1 1 $MNCOUNT`; do
+  for i in `seq 1 1 $total_masternodes`; do
     echo
       echo "Please type the 'masternode private key' for this $ALIAS followed by [ENTER]:"
       read MN_PRIVATE_KEY
 
-      echo "I + 1" + (i + 1)
+      let "realtive_port=65442 + ${i}"
+      echo $realtive_port
+      install_dir="${CONF_DIR}${i}"
+      echo $install_dir
+      
+      #Write config to config file
+      mkdir -p $install_dir
+      cd $install_dir
+      touch $CONF_FILE
+     
+      touch dystem.conf_TEMP
+      echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
+      echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
+      echo "rpcallowip=127.0.0.1" >> dystem.conf_TEMP
+      echo "rpcport=17100" >> dystem.conf_TEMP
+      echo "listen=1" >> dystem.conf_TEMP
+      echo "server=1" >> dystem.conf_TEMP
+      echo "daemon=1" >> dystem.conf_TEMP
+      echo "masternode=1" >> dystem.conf_TEMP
+      echo "masternodeaddr=$(hostname  -I | cut -f1 -d' '):$realtive_port" >> dystem.conf_TEMP
+      echo "masternodeprivkey=$MN_PRIVATE_KEY" >> dystem.conf_TEMP
+      echo "maxconnections=256" >> dystem.conf_TEMP
+      echo "port=${realtive_port}" >> dystem.conf_TEMP
+      echo "addnode=45.32.236.168" >> dystem.conf_TEMP
+      echo "addnode=45.76.251.25" >> dystem.conf_TEMP
+      echo "addnode=149.28.146.122" >> dystem.conf_TEMP
+      
+      mv dystem.conf_TEMP dystem.conf
 
-      echo "PORT + I" + (i + 1)
-
+      cd ../
   done
-  	#Write config to config file
-  	#mkdir -p $CONF_DIR
-  	#cd $CONF_DIR
-  	#touch $CONF_FILE 
 
-  	#touch dystem.conf_TEMP
-  	#echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
-  	#echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
-  	#echo "rpcallowip=127.0.0.1" >> dystem.conf_TEMP 
-  	#echo "rpcport=17100" >> dystem.conf_TEMP 
-  	#echo "listen=1" >> dystem.conf_TEMP 
-  	#echo "server=1" >> dystem.conf_TEMP 
-  	#echo "daemon=1" >> dystem.conf_TEMP 
-  	#echo "masternode=1" >> dystem.conf_TEMP 
-  	#echo "masternodeaddr=$(hostname  -I | cut -f1 -d' '):$PORT" >> dystem.conf_TEMP 
-  	#echo "masternodeprivkey=$MN_PRIVATE_KEY" >> dystem.conf_TEMP 
-  	#echo "maxconnections=256" >> dystem.conf_TEMP 
-  	#echo "port=65443" >> dystem.conf_TEMP 
-    #echo "addnode=45.32.236.168" >> dystem.conf_TEMP 
-    #echo "addnode=45.76.251.25" >> dystem.conf_TEMP 
-    #echo "addnode=149.28.146.122" >> dystem.conf_TEMP 
-    #echo "addnode=80.240.31.71" >> dystem.conf_TEMP 
-    #echo "addnode=104.238.189.152" >> dystem.conf_TEMP 
-    #echo "addnode=149.28.232.166" >> dystem.conf_TEMP 
-    #echo "addnode=45.63.54.162" >> dystem.conf_TEMP 
-    #echo "addnode=108.61.215.68" >> dystem.conf_TEMP 
-    #echo "addnode=207.148.121.118" >> dystem.conf_TEMP 
-    #echo "addnode=207.148.80.150" >> dystem.conf_TEMP 
-    #echo "addnode=202.182.125.85" >> dystem.conf_TEMP 
-    #echo "addnode=217.163.29.93" >> dystem.conf_TEMP 
+        #sudo rm -rdf "/root/bin"
+        #sudo rm -f "/root/mnbin.tar.gz"
+        #sudo rm -f "/root/mn_install.sh"
 
-  	#mv dystem.conf_TEMP dystem.conf
-  	#sudo rm -rdf "/root/bin"
-  	#sudo rm -f "/root/mnbin.tar.gz"
-  	#sudo rm -f "/root/mn_install.sh"
-
-  	echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
+        echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
 fi 
