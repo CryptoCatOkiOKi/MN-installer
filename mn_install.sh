@@ -94,7 +94,7 @@ if [[ $AGREE =~ "y" ]] ; then
       let "realtive_port=65442 + ${i}"
       echo "The port for this masternode is:"
       echo $realtive_port
-      install_dir="${CONF_DIR}${i}"
+      install_dir="~/${CONF_DIR}${i}"
 
       #Write config to config file
       mkdir -p $install_dir
