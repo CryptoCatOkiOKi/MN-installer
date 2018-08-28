@@ -92,9 +92,14 @@ if [[ $AGREE =~ "y" ]] ; then
       read MN_PRIVATE_KEY
 
       let "realtive_port=65442 + ${i}"
+      echo "The port for this masternode is:"
       echo $realtive_port
       install_dir="${CONF_DIR}${i}"
-      echo $install_dir
+
+      #Write config to config file
+      mkdir -p $install_dir
+      cd $install_dir
+      touch $CONF_FILE
 
       echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
       echo "dystemd -daemon -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystemd${i}.sh
@@ -103,11 +108,6 @@ if [[ $AGREE =~ "y" ]] ; then
       echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
       echo "dystem-tx -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystem-tx${i}.sh
       chmod 755 ~/bin/dystem*.sh
-      
-      #Write config to config file
-      mkdir -p $install_dir
-      cd $install_dir
-      touch $CONF_FILE
      
       touch dystem.conf_TEMP
       echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
