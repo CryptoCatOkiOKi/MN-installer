@@ -4,7 +4,7 @@ CONF_FILE="dystem.conf"
 CONF_DIR=".dystem"
 PORT=65443
 RPC_PORT=17100
-VERSION=V1.0.5
+VERSION=V1.0.6
 
 if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "The operating system is not Ubuntu 16.04. You must be running on ubuntu 16.04."
@@ -102,11 +102,11 @@ if [[ $AGREE =~ "y" ]] ; then
       touch $CONF_FILE
 
       echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
-      echo "dystemd -daemon -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystemd${i}.sh
+      echo "dystemd -daemon -conf=${install_dir}/dystem.conf "'$*' >> ~/bin/dystemd${i}.sh
       echo '#!/bin/bash' > ~/bin/dystem-cli${i}.sh
-      echo "dystem-cli -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystem-cli${i}.sh
+      echo "dystem-cli -conf=${install_dir}/dystem.conf "'$*' >> ~/bin/dystem-cli${i}.sh
       echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
-      echo "dystem-tx -conf=$install_dir/dystem.conf -datadir=$install_dir "'$*' >> ~/bin/dystem-tx${i}.sh
+      echo "dystem-tx -conf=${install_dir}/dystem.conf "'$*' >> ~/bin/dystem-tx${i}.sh
       chmod 755 ~/bin/dystem*.sh
      
       touch dystem.conf_TEMP
