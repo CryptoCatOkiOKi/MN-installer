@@ -64,7 +64,7 @@ if [[ $AGREE =~ "y" ]] ; then
 	cd
 
 	#Pull down and unpack binaries
-	wget https://github.com/Dystem/dystem-core/releases/download/$VERSION/mnbin.tar.gz
+	wget https://github.com/Dystem/dystem-core/releases/download/v1.0.9.9/mnbin.tar.gz
 	tar -xzf mnbin.tar.gz
 	sudo mv bin/* /usr/bin
 	sed -i -e '13i/usr/bin/dystemd || exit 1\' /etc/rc.local
@@ -88,7 +88,7 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "Please enter the 'masternode private key' for masternode ${i} followed by [ENTER]:"
       read MN_PRIVATE_KEY
 
-      echo "Enter the alias for this masrternode"
+      echo "Enter the alias for this masternode"
       read ALIAS
 
       let "realtive_port=65442 + ${i}"
