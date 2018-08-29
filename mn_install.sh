@@ -126,6 +126,7 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "addnode=45.32.236.168" >> dystem.conf_TEMP
       echo "addnode=45.76.251.25" >> dystem.conf_TEMP
       echo "addnode=149.28.146.122" >> dystem.conf_TEMP
+      sudo ufw allow $realtive_port/tcp
       
       mv dystem.conf_TEMP dystem.conf
 
