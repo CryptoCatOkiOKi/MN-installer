@@ -67,7 +67,15 @@ if [[ $AGREE =~ "y" ]] ; then
 	wget https://github.com/Dystem/dystem-core/releases/download/v1.0.9.9/mnbin.tar.gz
 	tar -xzf mnbin.tar.gz
 	sudo mv bin/* /usr/bin
-	sed -i -e '13i/usr/bin/dystemd || exit 1\' /etc/rc.local
+
+  sudo apt-get install -y ufw
+  sudo ufw allow ssh/tcp
+  sudo ufw limit ssh/tcp
+  sudo ufw logging on
+  echo "y" | sudo ufw enable
+  sudo ufw status
+
+	#sed -i -e '13i/usr/bin/dystemd || exit 1\' /etc/rc.local
 	mkdir -p ~/bin
 	echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
 	source ~/.bashrc
@@ -126,6 +134,13 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "addnode=45.32.236.168" >> dystem.conf_TEMP
       echo "addnode=45.76.251.25" >> dystem.conf_TEMP
       echo "addnode=149.28.146.122" >> dystem.conf_TEMP
+      echo "addnode=140.82.32.198" >> dystem.conf_TEMP
+      echo "addnode=209.250.238.205" >> dystem.conf_TEMP
+      echo "addnode=95.179.164.81" >> dystem.conf_TEMP
+      echo "addnode=104.156.229.44" >> dystem.conf_TEMP
+      echo "addnode=45.32.135.37" >> dystem.conf_TEMP
+      echo "addnode=45.63.84.231" >> dystem.conf_TEMP
+
       sudo ufw allow $realtive_port/tcp
       
       mv dystem.conf_TEMP dystem.conf
