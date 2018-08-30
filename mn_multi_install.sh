@@ -106,11 +106,11 @@ if [[ $AGREE =~ "y" ]] ; then
       let "realtive_rpc_port=17100 + ${i}"
       install_dir=~/.dystem_$ALIAS
 
-      echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
+      echo '#!/bin/bash' > ~/bin/dystemd_$ALIAS.sh
       echo "dystemd -daemon -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystemd_$ALIAS.sh
-      echo '#!/bin/bash' > ~/bin/dystem-cli${i}.sh
+      echo '#!/bin/bash' > ~/bin/dystem-cli_$ALIAS.sh
       echo "dystem-cli -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-cli_$ALIAS.sh
-      echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
+      echo '#!/bin/bash' > ~/bin/dystem-tx_$ALIAS.sh
       echo "dystem-tx -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-tx_$ALIAS.sh
       chmod 755 ~/bin/dystem*.sh
 
@@ -137,7 +137,7 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "addnode=149.28.146.122" >> dystem.conf_TEMP
       echo "addnode=80.240.29.189" >> dystem.conf_TEMP
       echo "addnode=45.76.131.65" >> dystem.conf_TEMP
-      echo "addnode=207.148.122.26" >> dystem.conf_TEMP
+      echo "addnode=149.28.145.241" >> dystem.conf_TEMP
 
       sudo ufw allow $realtive_port/tcp
       
@@ -148,9 +148,9 @@ if [[ $AGREE =~ "y" ]] ; then
       cd ../
   done
 
-      sudo rm -rdf "/root/bin"
-      sudo rm -f "/root/mnbin.tar.gz"
-      sudo rm -f "/root/mn_install.sh"
+      #sudo rm -rdf "/root/bin"
+      #sudo rm -f "/root/mnbin.tar.gz"
+      #sudo rm -f "/root/mn_install.sh"
 
       echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
 fi 
