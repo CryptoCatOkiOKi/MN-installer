@@ -1,10 +1,7 @@
 #/bin/bash
          
-CONF_FILE="dystem.conf"
-CONF_DIR=".dystem"
-PORT=65443
 RPC_PORT=17100
-VERSION=V1.0.5
+VERSION=V1.0.6
 CORE_VERSION=v1.0.9.9
 
 if [[ $(lsb_release -d) != *16.04* ]]; then
@@ -68,55 +65,92 @@ if [[ $AGREE =~ "y" ]] ; then
 	cd
 
 	#Pull down and unpack binaries
-	wget https://github.com/Dystem/dystem-core/releases/download/$CORE_VERSION/mnbin.tar.gz
+	wget https://github.com/Dystem/dystem-core/releases/download/${CORE_VERSION}/mnbin.tar.gz
 	tar -xzf mnbin.tar.gz
 	sudo mv bin/* /usr/bin
-	sed -i -e '13i/usr/bin/dystemd || exit 1\' /etc/rc.local
+
+  sudo apt-get install -y ufw
+  sudo ufw allow ssh/tcp
+  sudo ufw limit ssh/tcp
+  sudo ufw logging on
+  echo "y" | sudo ufw enable
+  sudo ufw status
+
+	#sed -i -e '13i/usr/bin/dystemd || exit 1\' /etc/rc.local
 	mkdir -p ~/bin
 	echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
 	source ~/.bashrc
 
 	#Get users to input required details
-	echo "We are now going to setup the masternode"
-	echo
-  	echo "Please type the 'masternode private key' for this $ALIAS followed by [ENTER]:"
-  	read MN_PRIVATE_KEY
+	echo "We are now going to setup your masternodes…"
 
-  	#Write config to config file
-  	mkdir -p $CONF_DIR
-  	cd $CONF_DIR
-  	touch $CONF_FILE 
+  total_masternodes=""
+  re='^[0-3]+$'
+  while ! [[ $total_masternodes =~ $re ]] ; do
+    echo ""
+    echo "How many masternodes would you like to setup on this server?, note this is restricted to 3 as it is not recommnded to run more than 3 masternodes on a single server. type 1, 2 or 3 followed by [ENTER]:"
+    read total_masternodes
+  done
 
-  	touch dystem.conf_TEMP
-  	echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
-  	echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP 
-  	echo "rpcallowip=127.0.0.1" >> dystem.conf_TEMP 
-  	echo "rpcport=17100" >> dystem.conf_TEMP 
-  	echo "listen=1" >> dystem.conf_TEMP 
-  	echo "server=1" >> dystem.conf_TEMP 
-  	echo "daemon=1" >> dystem.conf_TEMP 
-  	echo "masternode=1" >> dystem.conf_TEMP 
-  	echo "masternodeaddr=$(hostname  -I | cut -f1 -d' '):$PORT" >> dystem.conf_TEMP 
-  	echo "masternodeprivkey=$MN_PRIVATE_KEY" >> dystem.conf_TEMP 
-  	echo "maxconnections=256" >> dystem.conf_TEMP 
-  	echo "port=65443" >> dystem.conf_TEMP 
-    echo "addnode=45.32.236.168" >> dystem.conf_TEMP 
-    echo "addnode=45.76.251.25" >> dystem.conf_TEMP 
-    echo "addnode=149.28.146.122" >> dystem.conf_TEMP 
-    echo "addnode=80.240.31.71" >> dystem.conf_TEMP 
-    echo "addnode=104.238.189.152" >> dystem.conf_TEMP 
-    echo "addnode=149.28.232.166" >> dystem.conf_TEMP 
-    echo "addnode=45.63.54.162" >> dystem.conf_TEMP 
-    echo "addnode=108.61.215.68" >> dystem.conf_TEMP 
-    echo "addnode=207.148.121.118" >> dystem.conf_TEMP 
-    echo "addnode=207.148.80.150" >> dystem.conf_TEMP 
-    echo "addnode=202.182.125.85" >> dystem.conf_TEMP 
-    echo "addnode=217.163.29.93" >> dystem.conf_TEMP 
+  for i in `seq 1 1 $total_masternodes`; do
+    echo
+      echo "Please enter the 'masternode private key' for masternode ${i} followed by [ENTER]:"
+      read MN_PRIVATE_KEY
 
-  	mv dystem.conf_TEMP dystem.conf
-  	sudo rm -rdf "/root/bin"
-  	sudo rm -f "/root/mnbin.tar.gz"
-  	sudo rm -f "/root/mn_install.sh"
+      echo "Enter the alias for this masternode"
+      read ALIAS
 
-  	echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee..."
+      let "realtive_port=65442 + ${i}"
+      echo "The port for this masternode is:"
+      echo $realtive_port
+      let "realtive_rpc_port=17100 + ${i}"
+      install_dir=~/.dystem_$ALIAS
+
+      echo '#!/bin/bash' > ~/bin/dystemd${i}.sh
+      echo "dystemd -daemon -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystemd_$ALIAS.sh
+      echo '#!/bin/bash' > ~/bin/dystem-cli${i}.sh
+      echo "dystem-cli -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-cli_$ALIAS.sh
+      echo '#!/bin/bash' > ~/bin/dystem-tx${i}.sh
+      echo "dystem-tx -conf=${install_dir}/dystem.conf -datadir=${install_dir} "'$*' >> ~/bin/dystem-tx_$ALIAS.sh
+      chmod 755 ~/bin/dystem*.sh
+
+      #Write config to config file
+      mkdir -p $install_dir
+      cd $install_dir
+      touch "dystem.conf"
+
+      touch dystem.conf_TEMP
+      echo "rpcuser=dtem"`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
+      echo "rpcpassword="`shuf -i 100000-10000000 -n 1` >> dystem.conf_TEMP
+      echo "rpcallowip=127.0.0.1" >> dystem.conf_TEMP
+      echo "rpcport=${realtive_rpc_port}" >> dystem.conf_TEMP
+      echo "listen=1" >> dystem.conf_TEMP
+      echo "server=1" >> dystem.conf_TEMP
+      echo "daemon=1" >> dystem.conf_TEMP
+      echo "masternode=1" >> dystem.conf_TEMP
+      echo "masternodeaddr=$(hostname  -I | cut -f1 -d' '):$realtive_port" >> dystem.conf_TEMP
+      echo "masternodeprivkey=$MN_PRIVATE_KEY" >> dystem.conf_TEMP
+      echo "maxconnections=256" >> dystem.conf_TEMP
+      echo "port=${realtive_port}" >> dystem.conf_TEMP
+      echo "addnode=45.32.236.168" >> dystem.conf_TEMP
+      echo "addnode=45.76.251.25" >> dystem.conf_TEMP
+      echo "addnode=149.28.146.122" >> dystem.conf_TEMP
+      echo "addnode=80.240.29.189" >> dystem.conf_TEMP
+      echo "addnode=45.76.131.65" >> dystem.conf_TEMP
+      echo "addnode=207.148.122.26" >> dystem.conf_TEMP
+
+      sudo ufw allow $realtive_port/tcp
+      
+      mv dystem.conf_TEMP dystem.conf
+
+      sh ~/bin/dystemd_$ALIAS.sh
+
+      cd ../
+  done
+
+      sudo rm -rdf "/root/bin"
+      sudo rm -f "/root/mnbin.tar.gz"
+      sudo rm -f "/root/mn_install.sh"
+
+      echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
 fi 
