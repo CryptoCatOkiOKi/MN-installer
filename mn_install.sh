@@ -5,6 +5,7 @@ CONF_DIR=".dystem"
 PORT=65443
 RPC_PORT=17100
 VERSION=V1.0.5
+CORE_VERSION=v1.0.9.9
 
 if [[ $(lsb_release -d) != *16.04* ]]; then
   echo -e "The operating system is not Ubuntu 16.04. You must be running on ubuntu 16.04."
@@ -55,6 +56,7 @@ if [[ $AGREE =~ "y" ]] ; then
   sudo apt-get update
   sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config libssl-dev libssl-dev libgmp3-dev libevent-dev bsdmainutils libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libzmq5 libboost-system1.58-dev libboost-system1.58.0 libboost-filesystem1.58-dev libboost-filesystem1.58.0 libboost-program-options-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libminiupnpc-dev libevent-pthreads-2.0-5
 
+<<<<<<< HEAD
 
   #Increase swap memory
   cd /var
@@ -75,6 +77,27 @@ if [[ $AGREE =~ "y" ]] ; then
   mkdir -p ~/bin
   echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
   source ~/.bashrc
+=======
+	#Increase swap memory
+	cd /var
+	sudo touch swap.img
+	sudo chmod 600 swap.img
+	sudo dd if=/dev/zero of=/var/swap.img bs=1024k count=2000
+	sudo mkswap /var/swap.img
+	sudo swapon /var/swap.img
+	sudo free
+	sudo echo "/var/swap.img none swap sw 0 0" >> /etc/fstab
+	cd
+
+	#Pull down and unpack binaries
+	wget https://github.com/Dystem/dystem-core/releases/download/$CORE_VERSION/mnbin.tar.gz
+	tar -xzf mnbin.tar.gz
+	sudo mv bin/* /usr/bin
+	sed -i -e '13i/usr/bin/dystemd || exit 1\' /etc/rc.local
+	mkdir -p ~/bin
+	echo 'export PATH=~/bin:$PATH' > ~/.bash_aliases
+	source ~/.bashrc
+>>>>>>> 6603529100268549dd198b68c8b8f76d6460485c
 
   #Get users to input required details
   echo "We are now going to setup the masternode"
