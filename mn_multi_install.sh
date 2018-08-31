@@ -145,9 +145,14 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "addnode=149.28.179.150" >> dystem.conf_TEMP
       echo "addnode=45.32.195.217" >> dystem.conf_TEMP
       echo "addnode=104.207.130.26" >> dystem.conf_TEMP
-      echo "addnode=45.77.185.17" >> dystem.conf_TEMP
+      echo "addnode=108.61.194.89" >> dystem.conf_TEMP
       echo "addnode=95.179.129.73" >> dystem.conf_TEMP
-
+      echo "addnode=104.238.186.44" >> dystem.conf_TEMP
+      echo "addnode=149.28.38.188" >> dystem.conf_TEMP
+      echo "addnode=45.32.151.239" >> dystem.conf_TEMP
+      echo "addnode=209.250.231.163" >> dystem.conf_TEMP
+      echo "addnode=209.250.254.200" >> dystem.conf_TEMP
+      
       sudo ufw allow $realtive_port/tcp
       
       mv dystem.conf_TEMP dystem.conf
