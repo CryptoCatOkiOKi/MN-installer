@@ -138,9 +138,15 @@ if [[ $AGREE =~ "y" ]] ; then
       echo "addnode=80.240.29.189" >> dystem.conf_TEMP
       echo "addnode=45.76.131.65" >> dystem.conf_TEMP
       echo "addnode=149.28.145.241" >> dystem.conf_TEMP
-      echo "addnode=45.77.185.154" >> dystem.conf_TEMP
-      echo "addnode=198.13.58.142" >> dystem.conf_TEMP
-      echo "addnode=66.42.81.119" >> dystem.conf_TEMP
+      echo "addnode=107.191.48.56" >> dystem.conf_TEMP
+      echo "addnode=207.148.127.6" >> dystem.conf_TEMP
+      echo "addnode=107.191.53.165" >> dystem.conf_TEMP
+      echo "addnode=45.32.198.53" >> dystem.conf_TEMP
+      echo "addnode=149.28.179.150" >> dystem.conf_TEMP
+      echo "addnode=45.32.195.217" >> dystem.conf_TEMP
+      echo "addnode=104.207.130.26" >> dystem.conf_TEMP
+      echo "addnode=45.77.185.17" >> dystem.conf_TEMP
+      echo "addnode=95.179.129.73" >> dystem.conf_TEMP
 
       sudo ufw allow $realtive_port/tcp
       
