@@ -83,12 +83,12 @@ if [[ $AGREE =~ "y" ]] ; then
 
 	#Get users to input required details
 	echo "We are now going to setup your masternodes…"
-
   total_masternodes=""
-  re='^[0-3]+$'
+  re='^[0-5]+$'
   while ! [[ $total_masternodes =~ $re ]] ; do
     echo ""
     echo "How many masternodes would you like to setup on this server?, note this is restricted to 3 as it is not recommnded to run more than 3 masternodes on a single server. type 1, 2 or 3 followed by [ENTER]:"
+    echo "*** Note its not recommended to set up more than 3 MNs on a small server on VULTR, doing so may mean your servers go down. IF you are unsure only run 3 at a time."
     read total_masternodes
   done
 
@@ -162,9 +162,8 @@ if [[ $AGREE =~ "y" ]] ; then
       cd ../
   done
 
-      #sudo rm -rdf "/root/bin"
-      #sudo rm -f "/root/mnbin.tar.gz"
-      #sudo rm -f "/root/mn_install.sh"
+      sudo rm -f "/root/mnbin.tar.gz"
+      sudo rm -f "/root/mn_install.sh"
 
       echo "Enjoy your masternode rewards! Now if you could get the developers a nice cup of coffee, or tea... perhaps a beer ?"
 fi 
