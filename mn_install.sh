@@ -122,7 +122,6 @@ if [[ $AGREE =~ "y" ]] ; then
     echo "addnode=209.250.254.200" >> dystem.conf_TEMP
 
     mv dystem.conf_TEMP dystem.conf
-    sudo rm -rdf "/root/bin"
     sudo rm -f "/root/mnbin.tar.gz"
     sudo rm -f "/root/mn_install.sh"
 
